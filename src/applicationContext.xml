@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--配置Sprig注解扫描器-->
+    <context:component-scan base-package="gzc.dao"/>
+    <context:component-scan base-package="gzc.service"/>
+    <context:component-scan base-package="gzc.controller"/>
+    <!--加载数据库db.properties配置文件-->
+    <context:property-placeholder system-properties-mode="NEVER" location="classpath:db.properties"/>
+    <!--配置数据源-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+        <property name="maxTotal" value="${maxTotal}"/>
+        <property name="maxIdle" value="${maxIdle}"/>
+        <property name="initialSize" value="${initialSize}"/>
+    </bean>
+
+    <!--配置事务管理器-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置Mybatis 工厂，添加SqlSessionFactoryBean到Spring容器中，由Spring进行管理
+        同时指定数据源以及Mybatis核心配置文件位置-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--配合扫描Mapper文件,mapperLocations是一个数组类型，可以配置多个Mapper文件-->
+        <property name="mapperLocations" value="classpath:gzc/mapper/*.xml"/>
+    </bean>
+
+    <!--配置Spring-Mybatis注解组件扫描器，映射
+      Spring将指定的包中所有被@Mapper注解标注的接口自动装配为Mybatis的映射接口-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="gzc.dao"/>
+        <!--注意这里是使用value，而不是ref，查看源码可以发现该属性是字符串类型-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+</beans>

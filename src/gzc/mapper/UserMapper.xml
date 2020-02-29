@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gzc.dao.UserDao">
+    <!--根据id查个人信息-->
+    <!-- 一对一级联查询方法一：嵌套查询，执行两个SQL语句 -->
+    <resultMap type="gzc.pojo.User" id="userAndIdCard_1">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+         <association property="idCard" column="idCard_id" javaType="gzc.pojo.IdCard" select="gzc.dao.IdCardDao.selectCodeById"/>
+        <!--一对多级联查询，ofType表示集合的类型，传入用户id查询订单-->
+        <collection property="orders" ofType="gzc.pojo.Orders" column="id"  select="gzc.dao.OrdersDao.selectOrdersByUserId"/>
+    </resultMap>
+    <select id="selectUserById_1" parameterType="Integer" resultMap="userAndIdCard_1">
+        select * from user where id=#{id}
+    </select>
+
+    <!--一对一级联查询方法二：连接查询，嵌套结果，执行一个SQL语句-->
+    <resultMap id="userAndIdCard_2" type="gzc.pojo.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <association property="idCard" javaType="gzc.pojo.IdCard">
+            <id property="id" column="idcard_id"/>
+            <result property="code" column="code"/>
+        </association>
+    </resultMap>
+    <select id="selectUserById_2" parameterType="Integer" resultMap="userAndIdCard_2">
+        select u.*,ic.code from user u, idcard ic where u.idcard_id=ic.id and u.id=#{id}
+    </select>
+
+    <!--一对一级联查询方法三：连接查询，执行一个SQL语句，结果通过实体模型类存储-->
+    <select id="selectUserById_3" parameterType="Integer" resultType="gzc.pojo.UserDetail">
+        select u.* ,ic.code from user u, idcard ic where u.idcard_id=ic.id and u.id=#{id}
+    </select>
+</mapper>

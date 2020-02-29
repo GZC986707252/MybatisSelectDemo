@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--利用Mybatis的延迟加载可以一定程度上提高查询效率-->
+    <settings>
+        <!--打开延迟加载的开关-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--将积极加载改为按需加载-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+    <!--告诉mybatis映射文件的位置-->
+    <mappers>
+        <!--直接在Spring中的SqlSessionFactoryBean中配置自动扫描，免得添加mapper文件后忘记配置这里
+        <mapper resource="gzc/mapper/UserMapper.xml" />
+        <mapper resource="gzc/mapper/IdCardMapper.xml" />
+        -->
+    </mappers>
+</configuration>
