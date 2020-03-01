@@ -1,6 +1,6 @@
 package gzc.dao;
 
-import gzc.pojo.Orders;
+import gzc.po.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +10,5 @@ import java.util.List;
 @Mapper
 public interface OrdersDao {
     List<Orders> selectOrdersByUserId(Integer uid);
+    List<Orders> selectAllOrdersAndProduct();
 }

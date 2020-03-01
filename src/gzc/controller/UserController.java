@@ -2,8 +2,8 @@ package gzc.controller;
 
 import gzc.dao.OrdersDao;
 import gzc.dao.UserDao;
-import gzc.pojo.Orders;
-import gzc.pojo.User;
+import gzc.po.Orders;
+import gzc.po.User;
 import gzc.pojo.UserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,11 +20,11 @@ public class UserController {
         User user1 = userDao.selectUserById_1(1);
         System.out.println(user1);
         System.out.println("------------------------------------");
-       /* User user2 =userDao.selectUserById_2(1);
+        User user2 =userDao.selectUserById_2(1);
         System.out.println(user2);
         System.out.println("------------------------------------");
         UserDetail user3 =userDao.selectUserById_3(1);
-        System.out.println(user3);*/
+        System.out.println(user3);
     }
 
 }

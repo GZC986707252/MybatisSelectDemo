@@ -1,4 +1,4 @@
-package gzc.pojo;
+package gzc.po;
 
 import java.util.List;
 

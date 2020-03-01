@@ -1,6 +1,6 @@
 package gzc.dao;
 
-import gzc.pojo.User;
+import gzc.po.User;
 import gzc.pojo.UserDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

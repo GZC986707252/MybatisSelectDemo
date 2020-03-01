@@ -1,4 +1,4 @@
-package gzc.pojo;
+package gzc.po;
 
 public class IdCard {
     private Integer id;

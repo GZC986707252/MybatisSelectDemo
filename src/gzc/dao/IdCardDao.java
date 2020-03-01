@@ -1,6 +1,6 @@
 package gzc.dao;
 
-import gzc.pojo.IdCard;
+import gzc.po.IdCard;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
